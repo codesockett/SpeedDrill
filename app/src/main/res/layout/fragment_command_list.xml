@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="stogin.com.speeddrill.OptionsFragment">
+    tools:context="stogin.com.speeddrill.CommandListFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="THIS IS AN OPTIONS FRAGMENT" />
+        android:text="THIS IS A COMMAND LIST FRAGMENT" />
 
 </FrameLayout>

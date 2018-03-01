@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OptionsFragment.OnFragmentInteractionListener} interface
+ * {@link CommandListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link OptionsFragment#newInstance} factory method to
+ * Use the {@link CommandListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OptionsFragment extends Fragment {
+public class CommandListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class OptionsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public OptionsFragment() {
+    public CommandListFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class OptionsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OptionsFragment.
+     * @return A new instance of fragment CommandListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OptionsFragment newInstance(String param1, String param2) {
-        OptionsFragment fragment = new OptionsFragment();
+    public static CommandListFragment newInstance(String param1, String param2) {
+        CommandListFragment fragment = new CommandListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +64,7 @@ public class OptionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_options, container, false);
+        return inflater.inflate(R.layout.fragment_command_list, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
