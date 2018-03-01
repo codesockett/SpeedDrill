@@ -21,13 +21,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-            <ListView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/list_options"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:id="@+id/fragment_container">
 
-            </ListView>
+            </FrameLayout>
 
         <Button
             android:id="@+id/button_start"

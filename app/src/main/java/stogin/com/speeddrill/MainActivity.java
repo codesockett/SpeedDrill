@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private final String TAG = "MainActivity";
     private TextToSpeech myTTS;
-    private OptionsListAdapter optionsListAdapter = new OptionsListAdapter();
+    private CommandListAdapter commandListAdapter = new CommandListAdapter();
     private boolean canSpeak = false;
 
     @Override
@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         myTTS = new TextToSpeech(this, this);
 
-        ((ListView) findViewById(R.id.list_options)).setAdapter(optionsListAdapter);
+        ((ListView) findViewById(R.id.list_options)).setAdapter(commandListAdapter);
 
         for (int i =0; i <20; i++)
-            optionsListAdapter.addItem("Test" + i);
+            commandListAdapter.addItem("Test" + i);
 
     }
 

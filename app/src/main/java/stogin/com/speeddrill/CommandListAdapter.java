@@ -14,7 +14,7 @@ import java.util.List;
  * Created by William on 3/1/2018.
  */
 
-public class OptionsListAdapter implements ListAdapter {
+public class CommandListAdapter implements ListAdapter {
     private List<String> options = new LinkedList<>();
     private List<DataSetObserver> observers = new LinkedList<>();
 
@@ -77,10 +77,10 @@ public class OptionsListAdapter implements ListAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.option_item, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.command_item, viewGroup, false);
         }
 
-        ((TextView) view.findViewById(R.id.text_option)).setText(options.get(i));
+        ((TextView) view.findViewById(R.id.text_command)).setText(options.get(i));
 
         return view;
     }
