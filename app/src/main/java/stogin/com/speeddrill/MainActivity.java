@@ -2,7 +2,7 @@ package stogin.com.speeddrill;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     android.support.v4.app.FragmentManager fragmentManager;
     OptionsFragment optionsFragment;
     CommandListFragment commandListFragment;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +28,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         fragmentManager = getSupportFragmentManager();
 
-        commandListFragment = CommandListFragment.newInstance("","");
+        commandListFragment = CommandListFragment.newInstance("", "");
         optionsFragment = OptionsFragment.newInstance("", "");
 
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fragment_container, optionsFragment);
-        transaction.commit();
+        mViewPager = findViewById(R.id.pager_fragment);
+        mViewPager.setAdapter(new CustomPagerAdapter(getSupportFragmentManager()));
+
 
     }
 
@@ -49,24 +50,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    public void onToggleOptionsClicked(View view) {
-        FragmentTransaction transaction;
-        // Toggle fragment
-        if (currentFragment) {
-            transaction = fragmentManager.beginTransaction();
-            transaction.remove(optionsFragment);
-            transaction.add(R.id.fragment_container, commandListFragment);
-            transaction.commit();
-
-        } else {
-            transaction = fragmentManager.beginTransaction();
-            transaction.remove(commandListFragment);
-            transaction.add(R.id.fragment_container, optionsFragment);
-            transaction.commit();
-        }
-
-        currentFragment = !currentFragment;
-    }
 
 
     @Override
