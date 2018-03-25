@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextToSpeech myTTS;
     private CommandListAdapter commandListAdapter = new CommandListAdapter();
     private boolean canSpeak = false;
-    private int currentFragment = 0;
+    private boolean currentFragment = true;
     android.support.v4.app.FragmentManager fragmentManager;
     OptionsFragment optionsFragment;
     CommandListFragment commandListFragment;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void onToggleOptionsClicked(View view) {
         FragmentTransaction transaction;
         // Toggle fragment
-        if (currentFragment == 0) {
+        if (currentFragment) {
             transaction = fragmentManager.beginTransaction();
             transaction.remove(optionsFragment);
             transaction.add(R.id.fragment_container, commandListFragment);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             transaction.commit();
         }
 
-        currentFragment = ~currentFragment;
+        currentFragment = !currentFragment;
     }
 
 
