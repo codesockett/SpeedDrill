@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SpeedDrill</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prefs_name">com.stogin.speeddrill.preferences</string>
+    <string name="prefs_commands">com.stogin.speeddrill.preferences.commands</string>
 </resources>

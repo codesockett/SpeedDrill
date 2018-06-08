@@ -1,5 +1,7 @@
 package stogin.com.speeddrill;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,15 +20,44 @@ import java.util.List;
 public class CommandListAdapter implements ListAdapter {
     private List<String> options = new LinkedList<>();
     private List<DataSetObserver> observers = new LinkedList<>();
+    private SharedPreferences preferences;
+    private Context context;
 
-    public void addItem(String item) {
-        options.add(item);
-        notifyDatasetChanged();
+    public CommandListAdapter(Context context, SharedPreferences preferences) {
+        super();
+
+        this.context = context;
+        this.preferences = preferences;
+
+
+        options.addAll(
+                preferences.getStringSet(context.getString(R.string.prefs_commands), new HashSet<String>())
+        );
     }
 
-    public void removeItem (String item) {
-        if (options.remove(item))
+    public void addItem(String item) {
+        if (!options.contains(item)) {
+            options.add(item);
             notifyDatasetChanged();
+
+            preferences
+                    .edit().putStringSet(
+                    context.getString(R.string.prefs_commands),
+                    new HashSet<>(options)
+            ).apply();
+        }
+    }
+
+    public void removeItem(String item) {
+        if (options.remove(item)) {
+            notifyDatasetChanged();
+
+            preferences
+                    .edit().putStringSet(
+                    context.getString(R.string.prefs_commands),
+                    new HashSet<>(options)
+            ).apply();
+        }
     }
 
     private void notifyDatasetChanged() {

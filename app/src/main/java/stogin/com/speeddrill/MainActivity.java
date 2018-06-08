@@ -1,5 +1,6 @@
 package stogin.com.speeddrill;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private final String TAG = "MainActivity";
     private TextToSpeech myTTS;
-    private CommandListAdapter commandListAdapter = new CommandListAdapter();
+    private CommandListAdapter commandListAdapter;
     private boolean canSpeak = false;
     private boolean currentFragment = true;
     android.support.v4.app.FragmentManager fragmentManager;
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         myTTS = new TextToSpeech(this, this);
 
         fragmentManager = getSupportFragmentManager();
+
+        SharedPreferences prefs =
+                this.getSharedPreferences(getString(R.string.prefs_name), MODE_PRIVATE);
+        commandListAdapter = new CommandListAdapter(this, prefs);
+
 
         commandListFragment = CommandListFragment.newInstance("", "");
         optionsFragment = OptionsFragment.newInstance("", "");
