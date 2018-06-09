@@ -8,6 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -70,14 +74,17 @@ public class CommandListFragment extends Fragment {
         SharedPreferences prefs =
                 this.getContext().getSharedPreferences(this.getContext().getString(R.string.prefs_name), MODE_PRIVATE);
         commandListAdapter = new CommandListAdapter(this.getContext(), prefs);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_command_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_command_list, container, false);
+
+        ((ListView)root.findViewById(R.id.command_list)).setAdapter(commandListAdapter);
+        root.findViewById(R.id.button_new_command).setOnClickListener(addNewCommandClicked);
+        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -115,4 +122,16 @@ public class CommandListFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    /* *********************** NOT FRAGMENT RELATED THINGS ********************************** */
+
+    /**
+     * Handles clicking the new command button by prompting the user for command text.
+     */
+    private View.OnClickListener addNewCommandClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            commandListAdapter.addItem("Test" + new Random().nextInt());
+        }
+    };
 }
