@@ -1,12 +1,15 @@
 package stogin.com.speeddrill;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -26,6 +29,8 @@ public class CommandListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CommandListAdapter commandListAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -48,6 +53,8 @@ public class CommandListFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
+
         return fragment;
     }
 
@@ -58,6 +65,12 @@ public class CommandListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        SharedPreferences prefs =
+                this.getContext().getSharedPreferences(this.getContext().getString(R.string.prefs_name), MODE_PRIVATE);
+        commandListAdapter = new CommandListAdapter(this.getContext(), prefs);
+
     }
 
     @Override

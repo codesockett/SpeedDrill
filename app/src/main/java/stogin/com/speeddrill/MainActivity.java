@@ -29,9 +29,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         fragmentManager = getSupportFragmentManager();
 
-        SharedPreferences prefs =
-                this.getSharedPreferences(getString(R.string.prefs_name), MODE_PRIVATE);
-        commandListAdapter = new CommandListAdapter(this, prefs);
 
 
         commandListFragment = CommandListFragment.newInstance("", "");
