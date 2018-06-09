@@ -1,5 +1,6 @@
 package stogin.com.speeddrill;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -48,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     public void onStartClicked(View view) {
-        if (canSpeak) {
-            myTTS.speak("Start button clicked.", TextToSpeech.QUEUE_ADD, new Bundle(), "StartUtterance");
-        }
+        Intent startShootingIntent = new Intent(this, ShootingActivity.class);
+
+        startActivity(startShootingIntent);
     }
 
 
