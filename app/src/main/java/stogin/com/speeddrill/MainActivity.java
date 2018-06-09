@@ -9,13 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
-    private TextToSpeech myTTS;
-    private CommandListAdapter commandListAdapter;
-    private boolean canSpeak = false;
-    private boolean currentFragment = true;
     android.support.v4.app.FragmentManager fragmentManager;
     OptionsFragment optionsFragment;
     CommandListFragment commandListFragment;
@@ -26,11 +22,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myTTS = new TextToSpeech(this, this);
-
         fragmentManager = getSupportFragmentManager();
-
-
 
         commandListFragment = CommandListFragment.newInstance("", "");
         optionsFragment = OptionsFragment.newInstance("", "");
@@ -41,13 +33,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
-    @Override
-    protected void onDestroy() {
-        myTTS.shutdown();
-        canSpeak = false;
-        super.onDestroy();
-    }
-
     public void onStartClicked(View view) {
         Intent startShootingIntent = new Intent(this, ShootingActivity.class);
 
@@ -55,17 +40,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
 
-
-    @Override
-    public void onInit(int i) {
-        if (i == TextToSpeech.ERROR) {
-            Log.e(TAG, "Error text to speech-ing");
-        } else if (i == TextToSpeech.SUCCESS) {
-            Log.v(TAG, "Successfully initialized text to speech");
-            canSpeak = true;
-            myTTS.speak("Hello, World!", TextToSpeech.QUEUE_FLUSH, new Bundle(), "HelloWorldUtterance");
-        }
-    }
 }
 
 
