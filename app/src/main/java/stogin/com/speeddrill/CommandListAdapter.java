@@ -45,6 +45,7 @@ public class CommandListAdapter implements ListAdapter {
                     context.getString(R.string.prefs_commands),
                     new HashSet<>(options)
             ).apply();
+            notifyDatasetChanged();
         }
     }
 
@@ -57,6 +58,7 @@ public class CommandListAdapter implements ListAdapter {
                     context.getString(R.string.prefs_commands),
                     new HashSet<>(options)
             ).apply();
+            notifyDatasetChanged();
         }
     }
 
