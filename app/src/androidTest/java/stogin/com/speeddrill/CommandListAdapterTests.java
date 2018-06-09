@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import junit.framework.Assert;
 
@@ -29,12 +30,17 @@ public class CommandListAdapterTests {
         return InstrumentationRegistry.getTargetContext();
     }
 
+    /**
+     * Creates shared preferences that are empty for use in testing.
+     */
     private SharedPreferences testPreferencesFactory() {
         Context appContext = appContextFactory();
         final String testSharedPrefsName = appContext.getPackageName() + "testsharedprefs";
 
 
-        return appContext.getSharedPreferences(testSharedPrefsName, Context.MODE_PRIVATE);
+        SharedPreferences preferences = appContext.getSharedPreferences(testSharedPrefsName, Context.MODE_PRIVATE);
+        preferences.edit().clear().commit();
+        return preferences;
     }
 
     private CommandListAdapter commandListAdapterFactory() {
@@ -114,6 +120,20 @@ public class CommandListAdapterTests {
 
         adapter.removeItem("Hello World");
         Assert.assertTrue(testObserver.wasNotified());
+    }
+
+    @Test
+    public void adapterCreatesViewsWhoseDeleteButtonsHaveTags() {
+        CommandListAdapter adapter = commandListAdapterFactory();
+
+        final String itemId = "Test item";
+
+        adapter.addItem(itemId);
+        View view = adapter.getView(0, null, null);
+
+        Assert.assertEquals(
+                view.findViewById(R.id.button_delete_command).getTag(),
+                itemId);
 
     }
 

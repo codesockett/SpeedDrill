@@ -6,8 +6,11 @@ import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -111,10 +114,13 @@ public class CommandListAdapter implements ListAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.command_item, viewGroup, false);
+            view = LayoutInflater.from(context).inflate(R.layout.command_item, viewGroup, false);
         }
 
         ((TextView) view.findViewById(R.id.text_command)).setText(options.get(i));
+        Button deleteButton = view.findViewById(R.id.button_delete_command);
+        deleteButton.setOnClickListener(onItemDeleteClicked);
+        deleteButton.setTag(options.get(i));
 
         return view;
     }
@@ -133,4 +139,13 @@ public class CommandListAdapter implements ListAdapter {
     public boolean isEmpty() {
         return options.size() == 0;
     }
+
+    View.OnClickListener onItemDeleteClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String tag = (String) view.getTag();
+            System.out.println("Removing: " + tag);
+            CommandListAdapter.this.removeItem(tag);
+        }
+    };
 }
