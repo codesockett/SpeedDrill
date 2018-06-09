@@ -3,4 +3,7 @@
 
     <string name="prefs_name">com.stogin.speeddrill.preferences</string>
     <string name="prefs_commands">com.stogin.speeddrill.preferences.commands</string>
+    <string name="prefs_delay_min">com.stogin.speeddrill.preferences.delay_min</string>
+    <string name="prefs_delay_max">com.stogin.speeddrill.preferences.delay_max</string>
+    <string name="prefs_command_count">com.stogin.speeddrill.preferences.command_count</string>
 </resources>
