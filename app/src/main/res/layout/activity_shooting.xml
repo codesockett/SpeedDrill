@@ -12,23 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:text="Shot times:"/>
+        android:text="Shot times:" />
 
-    <TextView
-        android:id="@+id/text_shot_clock"
+    <stogin.com.speeddrill.StopwatchVew
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="50dp"
-        android:gravity="center"
-        android:text="0:00:00"/>
+        android:layout_weight="1"/>
+
 
     <Button
+        android:id="@+id/button_stop_clock"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/button_stop_clock"
-        android:text="Stop Clock"
-        />
+        android:text="Stop Clock" />
 
 </android.widget.LinearLayout>
