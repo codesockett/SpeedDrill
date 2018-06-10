@@ -45,7 +45,6 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
 
         int delay = new Random().nextInt(delay_dif) + min_delay;
         commandHandler.postDelayed(startCommandsRunnable, delay);
-
     }
 
     private Runnable startCommandsRunnable = new Runnable() {

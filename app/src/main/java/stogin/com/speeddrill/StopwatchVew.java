@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
@@ -20,6 +23,8 @@ public class StopwatchVew extends View {
 
     public StopwatchVew(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        setSaveEnabled(true);
+        setSaveFromParentEnabled(true);
 
         /* Prepare the paint */
         paint = new Paint();
@@ -50,6 +55,7 @@ public class StopwatchVew extends View {
     }
 
 
+    /* ************** DRAWING ******** */
     @Override
     protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
         super.onSizeChanged(xNew, yNew, xOld, yOld);
@@ -63,6 +69,31 @@ public class StopwatchVew extends View {
         canvas.drawText(text, this.getPaddingLeft(), this.getMeasuredHeight() - getPaddingBottom(), paint);
     }
 
+    /* ************************* STATE SAVING AND UPDATING **************** */
+    private final String SAVE_KEY_SUPER = "superState";
+    private final String SAVE_KEY_START = "startTimeMillis";
+    @Override
+    public Parcelable onSaveInstanceState()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SAVE_KEY_SUPER, super.onSaveInstanceState());
+        bundle.putLong(SAVE_KEY_START, this.startTime); // ... save stuff
+        return bundle;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state)
+    {
+        if (state instanceof Bundle) // implicit null check
+        {
+            Bundle bundle = (Bundle) state;
+            this.startTime = bundle.getLong(SAVE_KEY_START); // ... load stuff
+            state = bundle.getParcelable(SAVE_KEY_SUPER);
+        }
+        super.onRestoreInstanceState(state);
+    }
+
+    /* ************************ PUBLIC INTERRACTION ************************* */
     public void start() {
         startTime = SystemClock.uptimeMillis();
         mHandler.postDelayed(update, 0);
