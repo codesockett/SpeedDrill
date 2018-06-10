@@ -1,15 +1,20 @@
 package stogin.com.speeddrill;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.media.session.MediaButtonReceiver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -82,7 +87,7 @@ public class CommandListFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_command_list, container, false);
 
-        ((ListView)root.findViewById(R.id.command_list)).setAdapter(commandListAdapter);
+        ((ListView) root.findViewById(R.id.command_list)).setAdapter(commandListAdapter);
         root.findViewById(R.id.button_new_command).setOnClickListener(addNewCommandClicked);
         return root;
     }
@@ -131,7 +136,28 @@ public class CommandListFragment extends Fragment {
     private View.OnClickListener addNewCommandClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            commandListAdapter.addItem("Test" + new Random().nextInt());
+            final AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(CommandListFragment.this.getContext());
+            final EditText commandName = new EditText(CommandListFragment.this.getContext());
+
+            dialogueBuilder.setTitle("New command:");
+            dialogueBuilder.setView(commandName);
+            dialogueBuilder.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            CommandListFragment.this.commandListAdapter.addItem(commandName.getText().toString());
+                        }
+                    });
+            dialogueBuilder.setNegativeButton(
+                    "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+
+            dialogueBuilder.create().show();
         }
     };
 }
