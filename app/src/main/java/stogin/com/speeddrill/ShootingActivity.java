@@ -1,6 +1,5 @@
 package stogin.com.speeddrill;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -8,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
@@ -33,18 +31,24 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
         /* Get relevant arguments via SharedPreferences */
         SharedPreferences preferences = getSharedPreferences(getString(R.string.prefs_name), MODE_PRIVATE);
 
-        commandCount = preferences.getInt(getString(R.string.prefs_command_count), 1);
+        commandCount = preferences.getInt(
+                getString(R.string.prefs_command_count),
+                getResources().getInteger(R.integer.default_command_count));
         commands = preferences.getStringSet(getString(R.string.prefs_commands),
                 new HashSet<>(Collections.singletonList("No commands provided.")));
 
         /* Figure out delay */
-        int min_delay = preferences.getInt(getString(R.string.prefs_delay_min), 5000);
-        int max_delay = preferences.getInt(getString(R.string.prefs_delay_max), 10000);
+        int min_delay = preferences.getInt(
+                getString(R.string.prefs_delay_min),
+                getResources().getInteger(R.integer.default_min_delay));
+        int max_delay = preferences.getInt(
+                getString(R.string.prefs_delay_max),
+                getResources().getInteger(R.integer.default_max_delay));
         int delay_dif = max_delay-min_delay;
 
 
         int delay = new Random().nextInt(delay_dif) + min_delay;
-        commandHandler.postDelayed(startCommandsRunnable, delay);
+        commandHandler.postDelayed(startCommandsRunnable, delay * 1000);
     }
 
     private Runnable startCommandsRunnable = new Runnable() {
