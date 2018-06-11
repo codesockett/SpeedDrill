@@ -1,12 +1,17 @@
 package stogin.com.speeddrill;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 
 /**
@@ -64,7 +69,84 @@ public class OptionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_options, container, false);
+        View root = inflater.inflate(R.layout.fragment_options, container, false);
+
+        /* Set up options fields */
+        EditText maxTimeText = root.findViewById(R.id.text_max_time);
+        EditText minTimeText = root.findViewById(R.id.text_min_time);
+        EditText commandCountText = root.findViewById(R.id.text_command_count);
+
+        final SharedPreferences preferences = getContext()
+                .getSharedPreferences(getString(R.string.prefs_name), Context.MODE_PRIVATE);
+        int minDelay = preferences.getInt(
+                getString(R.string.prefs_delay_min),
+                getResources().getInteger(R.integer.default_min_delay)
+        );
+        int maxDelay = preferences.getInt(
+                getString(R.string.prefs_delay_max),
+                getResources().getInteger(R.integer.default_max_delay)
+        );
+        int commandCount = preferences.getInt(
+                getString(R.string.prefs_command_count),
+                getResources().getInteger(R.integer.default_command_count)
+        );
+
+        maxTimeText.setHint(Integer.toString(maxDelay));
+        minTimeText.setHint(Integer.toString(minDelay));
+        commandCountText.setHint(Integer.toString(commandCount));
+
+        maxTimeText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                preferences.edit().putInt(getString(R.string.prefs_delay_max), Integer.valueOf(editable.toString())).apply();
+            }
+        });
+        minTimeText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                preferences.edit().putInt(getString(R.string.prefs_delay_min), Integer.valueOf(editable.toString())).apply();
+            }
+        });
+        commandCountText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                preferences.edit().putInt(getString(R.string.prefs_command_count), Integer.valueOf(editable.toString())).apply();
+                Log.v("Options fragment", editable.toString());
+            }
+        });
+
+
+        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
