@@ -7,12 +7,51 @@
     android:orientation="vertical"
     tools:context=".ShootingActivity">
 
-    <TextView
-        android:id="@+id/text_shot_times"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:layout_weight="2"
-        android:text="Shot times:" />
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/text_shot_times"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shot times:" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amplitude: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/text_amplitude"
+            />
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max amplitude: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/text_amplitude_max"
+            />
+
+    </LinearLayout>
 
     <stogin.com.speeddrill.StopwatchVew
         android:layout_width="match_parent"

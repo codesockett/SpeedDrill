@@ -3,24 +3,30 @@ package stogin.com.speeddrill;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class ShootingActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class ShootingActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, ShotDetector.OnSoundUpdateListener {
     private final String TAG = "Shooting Activity";
 
     // Runs commands in a delayed manner
     Handler commandHandler;
     int commandCount;
     Set<String> commands;
+
+    ShotDetector mShotDetector;
+
+    StopwatchVew stopwatch;
+    TextView currentAmplitude, maxAmplitude, shotTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,11 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
 
         if (savedInstanceState == null)
             commandHandler.postDelayed(startCommandsRunnable, delay * 1000);
+
+        this.currentAmplitude = findViewById(R.id.text_amplitude);
+        this.maxAmplitude = findViewById(R.id.text_amplitude_max);
+        this.shotTimes = findViewById(R.id.text_shot_times);
+        this.stopwatch = findViewById(R.id.stopwatch);
     }
 
     private Runnable startCommandsRunnable = new Runnable() {
@@ -62,12 +73,18 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
                 int index = new Random().nextInt(commands.size());
                 sayCommand((String) commands.toArray()[index]);
             }
-            ((StopwatchVew) findViewById(R.id.stopwatch)).start();
+            try {
+                mShotDetector = new ShotDetector();
+                mShotDetector.start(ShootingActivity.this, 100);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stopwatch.start();
         }
     };
 
     public void onPauseStopwatch(View view) {
-        ((StopwatchVew) findViewById(R.id.stopwatch)).pause();
+        stopwatch.pause();
     }
 
     /* ************************** TEXT TO SPEECH **************************************** */
@@ -92,6 +109,7 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
     protected void onDestroy() {
         myTTS.shutdown();
         canSpeak = false;
+        if (mShotDetector != null) mShotDetector.stop();
         super.onDestroy();
     }
 
@@ -100,5 +118,16 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
                 TextToSpeech.QUEUE_ADD,
                 new Bundle(),
                 COMMAND_UTTERANCE_ID);
+    }
+
+    @Override
+    public void shotDetected() {
+        shotTimes.append("\n" +stopwatch.currentTime() );
+    }
+
+    @Override
+    public void amplitudeUpdate(double current, double max) {
+        this.currentAmplitude.setText(String.format("%.1f",current));
+        this.maxAmplitude.setText(String.format("%.1f", max));
     }
 }

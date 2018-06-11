@@ -105,16 +105,20 @@ public class StopwatchVew extends View {
     private Runnable update = new Runnable() {
         @Override
         public void run() {
-            long currentTime = SystemClock.uptimeMillis();
-            long diff = currentTime - startTime;
-
-            String minutes = String.format("%01d", (int) diff / 60000);
-            diff = diff - 60000*((int) diff/60000);
-            String seconds = String.format("%02d", (int) (diff / 1000));
-            String millis = String.format("%03d",(int) (diff % 1000));
-            text = minutes + ":" + seconds + ":" + millis;
+            text = currentTime();
             StopwatchVew.this.invalidate();
             mHandler.postDelayed(update, 50);
         }
     };
+
+    public String currentTime() {
+        long currentTime = SystemClock.uptimeMillis();
+        long diff = currentTime - startTime;
+
+        String minutes = String.format("%01d", (int) diff / 60000);
+        diff = diff - 60000*((int) diff/60000);
+        String seconds = String.format("%02d", (int) (diff / 1000));
+        String millis = String.format("%03d",(int) (diff % 1000));
+        return minutes + ":" + seconds + ":" + millis;
+    }
 }
