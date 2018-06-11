@@ -88,7 +88,7 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
 
     private void sayCommand(String command) {
         myTTS.speak(command,
-                TextToSpeech.QUEUE_FLUSH,
+                TextToSpeech.QUEUE_ADD,
                 new Bundle(),
                 COMMAND_UTTERANCE_ID);
     }
