@@ -3,6 +3,7 @@ package stogin.com.speeddrill;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
                 int index = new Random().nextInt(commands.size());
                 sayCommand((String) commands.toArray()[index]);
             }
+            ((StopwatchVew) findViewById(R.id.stopwatch)).start();
         }
     };
 

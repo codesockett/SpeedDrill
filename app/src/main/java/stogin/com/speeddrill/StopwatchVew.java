@@ -38,7 +38,6 @@ public class StopwatchVew extends View {
         textSize = determineTextSize();
 
         mHandler = new Handler();
-        start();
     }
 
     private float determineTextSize() {
