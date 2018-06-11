@@ -1,9 +1,13 @@
 package stogin.com.speeddrill;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.pager_fragment);
         mViewPager.setAdapter(new CustomPagerAdapter(getSupportFragmentManager()));
 
+        checkPermissions();
 
     }
 
@@ -39,6 +44,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(startShootingIntent);
     }
 
+
+    private static final int PERMISSIONS_ALL = 1;
+    private void checkPermissions() {
+        // Check android permissions
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    PERMISSIONS_ALL
+            );
+        }
+    }
 
 }
 
