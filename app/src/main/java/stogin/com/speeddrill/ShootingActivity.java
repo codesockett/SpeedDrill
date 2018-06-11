@@ -7,6 +7,7 @@ import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -64,6 +65,10 @@ public class ShootingActivity extends AppCompatActivity implements TextToSpeech.
             ((StopwatchVew) findViewById(R.id.stopwatch)).start();
         }
     };
+
+    public void onPauseStopwatch(View view) {
+        ((StopwatchVew) findViewById(R.id.stopwatch)).pause();
+    }
 
     /* ************************** TEXT TO SPEECH **************************************** */
 

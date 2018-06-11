@@ -99,7 +99,7 @@ public class StopwatchVew extends View {
     }
 
     public void pause() {
-
+        mHandler.removeCallbacks(update);
     }
 
     private Runnable update = new Runnable() {
