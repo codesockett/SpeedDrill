@@ -77,7 +77,7 @@ public class ShotDetector {
 
             max = Math.max(max, amplitude);
 
-            if (mListener != null && amplitude >= 20000) {
+            if (mListener != null && amplitude >= 30000) {
                 mListener.shotDetected();
                 // Add half a second for debouncing
                 mHandler.postDelayed(updateSoundTask, updateInterval + 500);
